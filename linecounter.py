@@ -36,15 +36,19 @@ def countDirectoryLines(path):
 	return total
 
 def main():
+
+	os.chdir(os.path.expanduser('~'))
+
 	if(len(sys.argv) < 2):
 		path = input("Enter file path: ")
 	else:
 		path = sys.argv[1]
-	
+
 	if(os.path.isdir(path)):
 		print("Total: {}".format(countDirectoryLines(path)))
 	else:
-		countFileLines(path)
+		if(countFileLines(path) == 0):
+			print("ERROR: Cannot find {} - Not a file or directory.".format(path))
 
 if __name__  == "__main__":
 	main()
