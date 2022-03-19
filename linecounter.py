@@ -1,4 +1,5 @@
 import os
+import sys
 
 formats = [
 "makefile",
@@ -35,8 +36,11 @@ def countDirectoryLines(path):
 	return total
 
 def main():
-	path = input("Enter file path: ")
-
+	if(len(sys.argv) < 2):
+		path = input("Enter file path: ")
+	else:
+		path = sys.argv[1]
+	
 	if(os.path.isdir(path)):
 		print("Total: {}".format(countDirectoryLines(path)))
 	else:
