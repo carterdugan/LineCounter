@@ -20,7 +20,7 @@ def countFileLines(path):
 			print(path + ":", len(lines))
 			return len(lines)
 	except:
-		print("ERROR: Cannot find {} - Not a file or directory.".format(path))
+		print("ERROR: Cannot find '{}' - Not a file or directory. Use '--help' for more info.".format(path))
 		return 0
 
 def countDirectoryLines(path):
@@ -41,6 +41,9 @@ def main():
 
 	if(len(sys.argv) < 2):
 		path = input("Enter file path: ")
+	elif("--help" in sys.argv):
+		print("Usage: linecounter <PATH>")
+		return
 	else:
 		path = sys.argv[1]
 
@@ -48,7 +51,7 @@ def main():
 		print("Total: {}".format(countDirectoryLines(path)))
 	else:
 		if(countFileLines(path) == 0):
-			print("ERROR: Cannot find {} - Not a file or directory.".format(path))
+			print("ERROR: Cannot find '{}' - Not a file or directory. Use '--help' for more info.".format(path))
 
 if __name__  == "__main__":
 	main()
