@@ -34,9 +34,13 @@ def countDirectoryLines(path):
 			total += countFileLines(path + i)
 	return total
 
-path = input("Enter file path: ")
+def main():
+	path = input("Enter file path: ")
 
-if(os.path.isdir(path)):
-	print("Total: {}".format(countDirectoryLines(path)))
-else:
-	countFileLines(path)
+	if(os.path.isdir(path)):
+		print("Total: {}".format(countDirectoryLines(path)))
+	else:
+		countFileLines(path)
+
+if __name__  == "__main__":
+	main()
