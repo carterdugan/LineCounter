@@ -18,7 +18,7 @@ def countDirectoryLines(path):
 			total += countDirectoryLines(path + '/' + i)
 	return total
 
-choice = input("1.) File\n2.) Director\n>>> ")
+choice = input("1.) File\n2.) Directory\n>>> ")
 try:
 	choice = int(choice)
 except:
