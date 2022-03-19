@@ -11,27 +11,32 @@ formats = [
 ]
 
 def countFileLines(path):
-	with open(path) as f:
-		lines = f.readlines()
-		print(path + ":", len(lines))
-		return len(lines)
+	if not path.split(".")[-1] in formats:
+		return 0
+	try:
+		with open(path) as f:
+			lines = f.readlines()
+			print(path + ":", len(lines))
+			return len(lines)
+	except:
+		print("ERROR: Cannot find {} - Not a file or directory.".format(path))
+		return 0
 
 def countDirectoryLines(path):
-
+	if path[-1] != '/':
+		path += '/'
 	directory = os.listdir(path)
 	total = 0
 	for i in directory:
-		if i.split(".")[-1] in formats:
-			total += countFileLines(path + i)
-		elif os.path.isdir(path + i):
+		if os.path.isdir(path + i):
 			total += countDirectoryLines(path + i)
+		else:
+			total += countFileLines(path + i)
 	return total
 
 path = input("Enter file path: ")
 
 if(os.path.isdir(path)):
-	if path[-1] != '/':
-		path += '/'
-	countDirectoryLines(path)
+	print("Total: {}".format(countDirectoryLines(path)))
 else:
 	countFileLines(path)
