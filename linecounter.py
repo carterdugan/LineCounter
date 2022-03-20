@@ -21,10 +21,12 @@ verboseDirectory = Flag(["-vd", "--verbose-directory"])
 
 verboseErrors = Flag(["-ve", "--verbose-errors"])
 
+includeGit = Flag(["-ig", "--include-git"])
+
 # Continues counting down the directory tree
 tree = Flag(["-t", "--tree"])
 
-optionFlags = [verboseFile, verboseDirectory, verboseErrors, tree]
+optionFlags = [verboseFile, verboseDirectory, verboseErrors, tree, includeGit]
 
 # File extension list
 formats = []
@@ -58,6 +60,9 @@ def count_file_lines(path):
 
 # Counts the lines in a directory through recursion and calls to count_file_lines()
 def count_directory_lines(path):
+
+	if(".git" in path and not includeGit.flag):
+		return 0
 
 	if path[-1] != '/':
 		path += '/'
