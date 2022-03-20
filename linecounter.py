@@ -36,7 +36,7 @@ def count_file_lines(path):
 	# Check if the file being checked at path has a valid extension
 	if not path.split(".")[-1] in formats:
 		if(verboseErrors.flag):
-			print("\n'{}' file extension not recognized. Skipping.\n".format(path))
+			print("'{}' file extension not recognized. Skipping.".format(path))
 		return 0
 
 	# Attempt to open the file and count the lines
