@@ -40,7 +40,7 @@ def count_file_lines(path):
 	# Attempt to open the file and count the lines
 	try:
 		with open(path, 'r') as f:
-			lines = f.readlines()
+			lines = [line for line in f.readlines() if line != "\n"]
 
 			if(verboseFile.flag):
 				print(path + ":", len(lines))
@@ -91,13 +91,11 @@ if __name__  == "__main__":
 
 	options = []
 
-	if(len(sys.argv) < 2):
-		path = input("Enter file or directory path: ")
+	if(len(sys.argv) < 3):
+		print("Usage: linecounter [OPTIONS] <PATH> <EXTENSION_1>,[EXTENSION_2],...,[EXTENSION_N]")
+		quit()
 	else:
 		path = sys.argv[-2]
-	if(len(sys.argv) < 3):
-		extensions = input("Enter your file extensions, separated by space [.c .py .cpp ... etc]: ").split()
-	else:
 		extensions = sys.argv[-1].split(",")
 		options = sys.argv[1:-2]
 
