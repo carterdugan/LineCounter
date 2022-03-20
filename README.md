@@ -4,7 +4,7 @@ Count your lines of code using this small python script
 Not an avid python user, so the code is probably not very pythonic.
 
 ## Usage
-### `linecounter [OPTIONS] <PATH> <EXTENSION_1>,[EXTENSION_2],...,[EXTENSION_N]`
+##### `linecounter [OPTIONS] <PATH> <EXTENSION_1>,[EXTENSION_2],...,[EXTENSION_N]`
 
   * Options
     * There are currently options to specify different verbose outputs and recursively moving down
