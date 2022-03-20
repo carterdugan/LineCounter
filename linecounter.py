@@ -80,8 +80,8 @@ def count_directory_lines(path):
 if __name__  == "__main__":
 
 	if("--help" in sys.argv):
-		print("Usage: linecounter [OPTIONS] <PATH> <EXTENSION_1>,[EXTENSION_2],...,[EXTENSION_N]")
-		print("~~~OPTIONS~~~")
+		print("Usage: linecounter [OPTIONS] <PATH> <EXTENSION_1>,[EXTENSION_2],...,[EXTENSION_N]\n")
+		print("{:^25}".format("[[OPTIONS]]\n"))
 		
 		for flag in optionFlags:
 			print("{:>10} {:<15}\n".format(flag.options[0], flag.options[1]))
