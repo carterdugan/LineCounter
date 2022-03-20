@@ -16,6 +16,6 @@ the count.
 Extensions for files you want to be counted should be listed at the end seperated by commas.
 Each extension should consist of a period followed by the extension itself.
 ### Example
-`linecounter -t -vf -vd /home/USER-NAME/code/repos/`
+`linecounter -t -vf -vd /PATH/TO/DIRECTORY/OR/FILE .c,.h,.cpp,.hpp`
 
 (Note: This example assumes the script has been added to PATH)
