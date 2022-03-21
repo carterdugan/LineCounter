@@ -1,8 +1,6 @@
 import os
 import sys
 
-# TODO: Add flag descriptions
-
 # Class for command line flags
 class Flag:
 	def __init__(self, options, default=False):
@@ -19,22 +17,31 @@ verboseFile = Flag(["-vf", "--verbose-file"])
 # Does the same as above, but for directories
 verboseDirectory = Flag(["-vd", "--verbose-directory"])
 
+# Does the same as above but for errors
 verboseErrors = Flag(["-ve", "--verbose-errors"])
 
+# Displays the subtotals of lines of code per extension
+subtotals = Flag(["-st", "--subtotals"])
+
+# Includes .git folders, idk why you would want to do this, but feel free
 includeGit = Flag(["-ig", "--include-git"])
 
 # Continues counting down the directory tree
 tree = Flag(["-t", "--tree"])
 
-optionFlags = [verboseFile, verboseDirectory, verboseErrors, tree, includeGit]
+# A list of options flags
+optionFlags = [verboseFile, verboseDirectory, verboseErrors, subtotals, tree, includeGit]
 
-# File extension list
-formats = []
+# File extension dictionary, is a disctionary in order to count subtotals
+formats = {}
 
 # Counts the lines in a file
 def count_file_lines(path):
+
+	extension = path.split(".")[-1]
+
 	# Check if the file being checked at path has a valid extension
-	if not path.split(".")[-1] in formats:
+	if not extension in formats:
 		if(verboseErrors.flag):
 			print("'{}' file extension not recognized. Skipping.".format(path))
 		return 0
@@ -43,11 +50,15 @@ def count_file_lines(path):
 	try:
 		with open(path, 'r') as f:
 			lines = [line for line in f.readlines() if line != "\n"]
-
-			if(verboseFile.flag):
-				print(path + ":", len(lines))
+			num = len(lines)
 			
-			return len(lines)
+			if(verboseFile.flag):
+				print(path + ":", num)
+
+			# Increment subtotal
+			formats[extension] += num
+
+			return num
 	
 	except FileNotFoundError:
 		if(verboseErrors.flag):
@@ -58,11 +69,13 @@ def count_file_lines(path):
 			print("Permission denied. Cannot access '{}'".format(path))
 		return -1
 
+
 # Counts the lines in a directory through recursion and calls to count_file_lines()
 def count_directory_lines(path):
 
 	if(".git" in path and not includeGit.flag):
 		return 0
+
 
 	if path[-1] != '/':
 		path += '/'
@@ -71,8 +84,11 @@ def count_directory_lines(path):
 	
 	total = 0
 	for i in directory:
+
+		# Recursively navigate directories
 		if os.path.isdir(path + i) and tree.flag:
 			total += count_directory_lines(path + i)
+		# Otherwise count file lines
 		else:
 			num = count_file_lines(path + i)
 			if not num == -1:
@@ -111,10 +127,16 @@ if __name__  == "__main__":
 				break
 
 	for i in extensions:
-		formats.append(i.strip("."))
+		formats.update({i.strip("."):0})
+
+	total = count_directory_lines(path)
+
+	if(subtotals.flag):
+		for extension in formats:
+			print(".{}: {} lines".format(extension, formats[extension]))
 
 	if(os.path.isdir(path)):
-		print("Total: {}".format(count_directory_lines(path)))
+		print("Total: {} lines".format(total))
 	else:
 		verboseFile.flag = True
 		count_file_lines(path)
