@@ -35,6 +35,15 @@ option_flags = [verbose_file, verbose_directory, verbose_errors, subtotals, tree
 # File extension dictionary, is a disctionary in order to count subtotals
 formats = {}
 
+def print_help():
+	print("Use option --help to view this message.")
+	print("Usage: linecounter [OPTIONS] <PATH> <EXTENSION_1>,[EXTENSION_2],...,[EXTENSION_N]\n")
+	print("{:^25}".format("[[OPTIONS]]\n"))
+		
+	for flag in option_flags:
+		print("{:>10} {:<15}\n".format(flag.options[0], flag.options[1]))
+	quit()
+
 # Counts the lines in a file
 def count_file_lines(path):
 
@@ -101,20 +110,14 @@ def count_directory_lines(path):
 if __name__  == "__main__":
 
 	if("--help" in sys.argv):
-		print("Usage: linecounter [OPTIONS] <PATH> <EXTENSION_1>,[EXTENSION_2],...,[EXTENSION_N]\n")
-		print("{:^25}".format("[[OPTIONS]]\n"))
-		
-		for flag in option_flags:
-			print("{:>10} {:<15}\n".format(flag.options[0], flag.options[1]))
-		quit()
+		print_help()
 
 	os.chdir(os.path.expanduser('~'))
 
 	options = []
 
 	if(len(sys.argv) < 3):
-		print("Usage: linecounter [OPTIONS] <PATH> <EXTENSION_1>,[EXTENSION_2],...,[EXTENSION_N]")
-		quit()
+		print_help()
 	else:
 		path = sys.argv[-2]
 		extensions = sys.argv[-1].split(",")
