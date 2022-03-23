@@ -84,13 +84,13 @@ def count_directory_lines(path):
 	
 	total = 0
 	for i in directory:
-
+		newPath = path + i
 		# Recursively navigate directories
-		if os.path.isdir(path + i) and tree.flag:
+		if os.path.isdir(newPath) and tree.flag:
 			total += count_directory_lines(path + i)
 		# Otherwise count file lines
 		else:
-			num = count_file_lines(path + i)
+			num = count_file_lines(newPath)
 			if not num == -1:
 				total += num
 	
