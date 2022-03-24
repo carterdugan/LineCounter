@@ -47,6 +47,9 @@ def print_help():
 # Counts the lines in a file
 def count_file_lines(path):
 
+	if(os.path.isdir(path)):
+		return 0
+
 	extension = path.split(".")[-1]
 
 	# Check if the file being checked at path has a valid extension
