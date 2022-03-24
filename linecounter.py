@@ -136,7 +136,8 @@ if __name__  == "__main__":
 
 	if(subtotals.flag):
 		for extension in formats:
-			print(".{}: {} lines".format(extension, formats[extension]))
+			percent = "{0:.2f}".format(formats[extension] / total * 100)
+			print(".{}: {} lines ({}%)".format(extension, formats[extension], percent))
 
 	if(os.path.isdir(path)):
 		print("Total: {} lines".format(total))
