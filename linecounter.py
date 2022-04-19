@@ -1,6 +1,9 @@
 import os
 import sys
 
+# Path for exact path
+exact_path = ["p", "exact-path", False]
+
 # Explicitly states which files are being counted and how many lines were counted
 verbose_file = ["f", "verbose-file", False]
 
@@ -20,7 +23,7 @@ include_git = ["g", "include-git", False]
 tree = ["t", "tree", False]
 
 # A list of options flags
-option_flags = [verbose_file, verbose_directory, verbose_errors, subtotals, tree, include_git]
+option_flags = [exact_path, verbose_file, verbose_directory, verbose_errors, subtotals, tree, include_git]
 
 # File extension dictionary, is a disctionary in order to count subtotals
 formats = {}
@@ -112,8 +115,6 @@ if __name__  == "__main__":
 	if "--help" in sys.argv:
 		print_help()
 
-	os.chdir(os.path.expanduser('~'))
-
 	options = []
 
 	# Missing path and extension minimum
@@ -126,24 +127,17 @@ if __name__  == "__main__":
 
 	# Check for command line options
 	for option in options:
-
-		# Whether or not an option is valid
-		valid = True
 		if option[1] == '-':
 			for flag in option_flags:
 				if option[2:] == flag[1]:
 					flag[2] = not flag[2]
-				else:
-					valid = False
 		elif option[0] == '-':
 			for flag in option_flags:
 				if flag[0] in option[1:]:
 					flag[2] = not flag[2]
-				else:
-					valid = False
-		if not valid:
-			print("Invalid option '{}'".format(option))
-			print_help()
+
+	if(exact_path[2]):
+		os.chdir(os.path.expanduser('~'))
 
 	for i in extensions:
 		formats.update({i.strip("."):0})
