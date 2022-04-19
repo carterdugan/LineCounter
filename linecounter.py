@@ -84,6 +84,7 @@ def count_directory_lines(path):
 
 	if path[-1] != '/':
 		path += '/'
+	path = os.path.normcase(path)
 	
 	# Permission error catch
 	try:
@@ -96,7 +97,7 @@ def count_directory_lines(path):
 
 	total = 0
 	for i in directory:
-		new_path = path + i
+		new_path = os.path.join(path, i)
 		# Recursively navigate directories
 		if os.path.isdir(new_path) and tree[2]:
 			total += count_directory_lines(new_path)
