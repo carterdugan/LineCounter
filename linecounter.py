@@ -31,7 +31,7 @@ def print_help():
 	print("{:^25}".format("[[OPTIONS]]\n"))
 		
 	for flag in option_flags:
-		print("{:>10} {:<15}\n".format(flag[0], flag[1]))
+		print("{:>10} {:<15}\n".format("-" + flag[0], "--" + flag[1]))
 	quit()
 
 # Counts the lines in a file
@@ -124,19 +124,24 @@ if __name__  == "__main__":
 		extensions = sys.argv[-1].split(",")
 		options = sys.argv[1:-2]
 
+	# Check for command line options
 	for option in options:
-		contained = False
+
+		# Whether or not an option is valid
+		valid = True
 		if option[1] == '-':
 			for flag in option_flags:
 				if option[2:] == flag[1]:
 					flag[2] = not flag[2]
-					contained = True
+				else:
+					valid = False
 		elif option[0] == '-':
 			for flag in option_flags:
 				if flag[0] in option[1:]:
 					flag[2] = not flag[2]
-					contained = True
-		if not contained:
+				else:
+					valid = False
+		if not valid:
 			print("Invalid option '{}'".format(option))
 			print_help()
 
