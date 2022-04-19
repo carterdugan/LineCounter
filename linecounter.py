@@ -47,14 +47,14 @@ def print_help():
 # Counts the lines in a file
 def count_file_lines(path):
 
-	if(os.path.isdir(path)):
+	if os.path.isdir(path):
 		return 0
 
 	extension = path.split(".")[-1]
 
 	# Check if the file being checked at path has a valid extension
 	if not extension in formats:
-		if(verbose_errors.flag):
+		if verbose_errors.flag:
 			print("'{}' file extension not recognized. Skipping.".format(path))
 		return 0
 
@@ -64,7 +64,7 @@ def count_file_lines(path):
 			lines = [line for line in f.readlines() if line != "\n"]
 			num = len(lines)
 			
-			if(verbose_file.flag):
+			if verbose_file.flag:
 				print(path + ":", num)
 
 			# Increment subtotal
@@ -73,11 +73,11 @@ def count_file_lines(path):
 			return num
 	
 	except FileNotFoundError:
-		if(verbose_errors.flag):
+		if verbose_errors.flag:
 			print("Cannot find '{}' - Not a file or directory. Use '--help' for more info.".format(path))
 		return -1
 	except PermissionError:
-		if(verbose_errors.flag):
+		if verbose_errors.flag:
 			print("Permission denied. Cannot access '{}'".format(path))
 		return -1
 
@@ -85,15 +85,22 @@ def count_file_lines(path):
 # Counts the lines in a directory through recursion and calls to count_file_lines()
 def count_directory_lines(path):
 
-	if(".git" in path and not include_git.flag):
+	if ".git" in path and not include_git.flag:
 		return 0
 
 
 	if path[-1] != '/':
 		path += '/'
 	
-	directory = os.listdir(path)
-	
+	# Permission error catch
+	try:
+		directory = os.listdir(path)
+	except PermissionError:
+		if verbose_errors.flag:
+			print("Permission denied. Cannot access '{}'".format(path))
+		return 0
+
+
 	total = 0
 	for i in directory:
 		new_path = path + i
@@ -106,20 +113,21 @@ def count_directory_lines(path):
 			if not num == -1:
 				total += num
 	
-	if(total > 0 and verbose_directory.flag):
+	if total > 0 and verbose_directory.flag:
 		print("Directory subtotal for '{}': {}".format(path, total))
 	return total
 	
 if __name__  == "__main__":
 
-	if("--help" in sys.argv):
+	if "--help" in sys.argv:
 		print_help()
 
 	os.chdir(os.path.expanduser('~'))
 
 	options = []
 
-	if(len(sys.argv) < 3):
+	# Missing path and extension minimum
+	if len(sys.argv) < 3:
 		print_help()
 	else:
 		path = sys.argv[-2]
@@ -135,14 +143,12 @@ if __name__  == "__main__":
 	for i in extensions:
 		formats.update({i.strip("."):0})
 
-	total = count_directory_lines(path)
-
-	if(subtotals.flag):
-		for extension in formats:
-			percent = "{0:.2f}".format(formats[extension] / total * 100)
-			print(".{}: {} lines ({}%)".format(extension, formats[extension], percent))
-
-	if(os.path.isdir(path)):
+	if os.path.isdir(path):
+		total = count_directory_lines(path)
+		if subtotals.flag:
+			for extension in formats:
+				percent = 0 if total <= 0 else "{0:.2f}".format(formats[extension] / total * 100)
+				print(".{}: {} lines ({}%)".format(extension, formats[extension], percent))
 		print("Total: {} lines".format(total))
 	else:
 		verbose_file.flag = True
