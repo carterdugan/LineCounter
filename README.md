@@ -11,7 +11,7 @@ Not an avid python user, so the code is probably not very pythonic.
 the directory tree. For a list of options, use 'linecounter --help'
 
   * Path
-    * Path may be either exact or relative. See `--help` for more details.
+    * Path may be either exact or relative. See `--help` for more details. Specified paths must use '/' separators regardless of operating system.
 
   * Extensions
     * Extensions for files you want to be counted should be listed at the end seperated by commas.
