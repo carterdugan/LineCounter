@@ -20,7 +20,7 @@ the count.
 
 ## Examples
 `linecounter -t -f -vd /PATH/TO/DIRECTORY/OR/FILE .c,.h,.cpp,.hpp`
-`linecounter -tf --verbose-directory /PATH/TO/DIRECTORY/OR/FILE .c,.h,.cpp,.hpp`
+  `linecounter -tf --verbose-directory /PATH/TO/DIRECTORY/OR/FILE .c,.h,.cpp,.hpp`
 
 (Note: This example assumes the script has been added to PATH)
 
