@@ -12,19 +12,19 @@ class Flag:
 		self.description = ""
 
 # Explicitly states which files are being counted and how many lines were counted
-verbose_file = Flag(["-vf", "--verbose-file"])
+verbose_file = Flag(["-f", "--verbose-file"])
 
 # Does the same as above, but for directories
-verbose_directory = Flag(["-vd", "--verbose-directory"])
+verbose_directory = Flag(["-d", "--verbose-directory"])
 
 # Does the same as above but for errors
-verbose_errors = Flag(["-ve", "--verbose-errors"])
+verbose_errors = Flag(["-e", "--verbose-errors"])
 
 # Displays the subtotals of lines of code per extension
-subtotals = Flag(["-st", "--subtotals"])
+subtotals = Flag(["-s", "--subtotals"])
 
 # Includes .git folders, idk why you would want to do this, but feel free
-include_git = Flag(["-ig", "--include-git"])
+include_git = Flag(["-g", "--include-git"])
 
 # Continues counting down the directory tree
 tree = Flag(["-t", "--tree"])
