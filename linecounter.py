@@ -22,8 +22,11 @@ include_git = ["g", "include-git", False]
 # Continues counting down the directory tree
 tree = ["t", "tree", False]
 
+# Count white space lines
+whitespace = ["w", "whitespace", False]
+
 # A list of options flags
-option_flags = [exact_path, verbose_file, verbose_directory, verbose_errors, subtotals, tree, include_git]
+option_flags = [exact_path, verbose_file, verbose_directory, verbose_errors, subtotals, tree, include_git, whitespace]
 
 # File extension dictionary, is a disctionary in order to count subtotals
 formats = {}
@@ -54,7 +57,7 @@ def count_file_lines(path):
 	# Attempt to open the file and count the lines
 	try:
 		with open(path, 'r') as f:
-			lines = [line for line in f.readlines() if line != "\n"]
+			lines = [line for line in f.readlines() if (whitespace[2] or line != "\n")]
 			num = len(lines)
 			
 			if verbose_file[2]:

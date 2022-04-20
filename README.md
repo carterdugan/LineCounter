@@ -7,8 +7,22 @@ Not an avid python user, so the code is probably not very pythonic.
 #### `linecounter [OPTIONS] <PATH> <EXTENSION_1>,[EXTENSION_2],...,[EXTENSION_N]`
 
   * Options
-    * There are currently options to specify different verbose outputs and recursively moving down
-the directory tree. For a list of options, use `linecounter --help`
+
+  `-p --exact-path` Specfies that the provided path is the exact path
+
+  `-f --verbose-file` Output all files visited and their subtotal
+
+  `-d --verbose-directory` Output all directories visited and their subtotal
+
+  `-e --verbose-errors` Output all encountered errors
+
+  `-s --subtotals` Output the subtotals of each specified extension
+
+  `-t --tree` Recursively search down the directory tree
+
+  `-g --include-git` Include git directories and files, you probably won't want to use this.
+
+  `-w --whitespace` Include linebreak white space when counting lines of code
 
   * Path
     * Path may be either exact or relative. See `--help` for more details. Specified paths must use '/' separators regardless of operating system.
