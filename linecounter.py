@@ -81,12 +81,11 @@ def count_directory_lines(path):
 	if ".git" in path and not include_git[2]:
 		return 0
 
-
+	# Add an additional slash if it doesn't exist, then correct it for the OS
 	if path[-1] != '/':
 		path += '/'
 	path = os.path.normcase(path)
 	
-	# Permission error catch
 	try:
 		directory = os.listdir(path)
 	except PermissionError:
@@ -94,19 +93,21 @@ def count_directory_lines(path):
 			print("Permission denied. Cannot access '{}'".format(path))
 		return 0
 
-
 	total = 0
 	for i in directory:
 		new_path = os.path.join(path, i)
+
 		# Recursively navigate directories
 		if os.path.isdir(new_path) and tree[2]:
 			total += count_directory_lines(new_path)
+		
 		# Otherwise count file lines
 		else:
 			num = count_file_lines(path + i)
 			if not num == -1:
 				total += num
 	
+	# Only print out directories with any code
 	if total > 0 and verbose_directory[2]:
 		print("Directory subtotal for '{}': {}".format(path, total))
 	return total
