@@ -68,11 +68,11 @@ def count_file_lines(path):
 	except FileNotFoundError:
 		if verbose_errors[2]:
 			print("Cannot find '{}' - Not a file or directory. Use '--help' for more info.".format(path))
-		return -1
+		return 0
 	except PermissionError:
 		if verbose_errors[2]:
 			print("Permission denied. Cannot access '{}'".format(path))
-		return -1
+		return 0
 
 
 # Counts the lines in a directory through recursion and calls to count_file_lines()
@@ -103,9 +103,7 @@ def count_directory_lines(path):
 		
 		# Otherwise count file lines
 		else:
-			num = count_file_lines(path + i)
-			if not num == -1:
-				total += num
+			total += count_file_lines(path + i)
 	
 	# Only print out directories with any code
 	if total > 0 and verbose_directory[2]:
