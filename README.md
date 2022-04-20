@@ -4,7 +4,7 @@ Count your lines of code using this small python script
 Not an avid python user, so the code is probably not very pythonic.
 
 ## Usage
-#### `linecounter [OPTIONS] <PATH> <EXTENSION_1>,[EXTENSION_2],...,[EXTENSION_N]`
+#### `linecounter [OPTIONS] <EXTENSIONS> <PATH>`
 
   * Options
 
@@ -28,13 +28,12 @@ Not an avid python user, so the code is probably not very pythonic.
     * Path may be either exact or relative. See `--help` for more details. Specified paths must use '/' separators regardless of operating system.
 
   * Extensions
-    * Extensions for files you want to be counted should be listed at the end seperated by commas.
-    * Each extension should consist of a period followed by the extension itself.
+    * Extensions can be specified individually or in collections. To list an extension individually, list it anywhere in the arguments before the path (include the period prefix). To create a collection of extensions, type the collection name, an equals sign, then all extensions separated by a comma. Two extensions are required for a collection. Collection syntax is as follows: `COLLECTION_NAME=.ex1,.ex2,.ex3,...` 
 
 ## Examples
-`linecounter -t -f -vd /PATH/TO/DIRECTORY/OR/FILE .c,.h,.cpp,.hpp`
+`linecounter -t -f -d .c,.h,.cpp,.hpp /PATH/TO/DIRECTORY/OR/FILE`
 
-`linecounter -tf --verbose-directory /PATH/TO/DIRECTORY/OR/FILE .c,.h,.cpp,.hpp`
+`linecounter -tf --verbose-directory .py C=.c,.h /PATH/TO/DIRECTORY/OR/FILE`
 
 (Note: This example assumes the script has been added to PATH)
 

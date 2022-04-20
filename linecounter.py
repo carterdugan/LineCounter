@@ -1,5 +1,6 @@
 import os
 import sys
+import re
 
 # Path for exact path
 exact_path = ["p", "exact-path", False]
@@ -30,6 +31,7 @@ option_flags = [exact_path, verbose_file, verbose_directory, verbose_errors, sub
 
 # File extension dictionary, is a disctionary in order to count subtotals
 formats = {}
+collections = {}
 
 def print_help():
 	print("Use option --help to view this message.")
@@ -48,11 +50,20 @@ def count_file_lines(path):
 
 	extension = path.split(".")[-1]
 
-	# Check if the file being checked at path has a valid extension
+	# If not found in formats, may be part of a collection
 	if not extension in formats:
-		if verbose_errors[2]:
-			print("'{}' file extension not recognized. Skipping.".format(path))
-		return 0
+		found = False
+		for key, value in collections.items():
+
+			# Update extension to collection name if part of a collection
+			if extension in value:
+				extension = key
+				found = True
+				break
+		if not found:
+			if verbose_errors[2]:
+				print("'{}' file extension not recognized. Skipping.".format(path))
+			return 0
 
 	# Attempt to open the file and count the lines
 	try:
@@ -124,26 +135,44 @@ if __name__  == "__main__":
 	if len(sys.argv) < 3:
 		print_help()
 	else:
-		path = sys.argv[-2]
-		extensions = sys.argv[-1].split(",")
-		options = sys.argv[1:-2]
+		path = sys.argv[-1]
 
-	# Check for command line options
-	for option in options:
-		if option[1] == '-':
+	r = re.compile(".*\=\..*\,.*")
+
+	# Go through arguments
+	for arg in sys.argv[:-1]:
+
+		# Full form argument
+		if arg[1] == '-':
 			for flag in option_flags:
-				if option[2:] == flag[1]:
+				if arg[2:] == flag[1]:
 					flag[2] = not flag[2]
-		elif option[0] == '-':
+
+		# Short form argument or argument list
+		elif arg[0] == '-':
 			for flag in option_flags:
-				if flag[0] in option[1:]:
+				if flag[0] in arg[1:]:
 					flag[2] = not flag[2]
+
+		# Individual extension
+		elif arg[0] == ".":
+			newExtension = arg.strip(".")
+			if newExtension not in formats:
+				formats.update({newExtension:0})
+
+		# Collection of extensions
+		elif "=" in arg and r.match(arg) is not None:
+			name = arg.split("=")[0]
+			collection = arg.split("=")[1]
+			collections.update({name:collection})
+			formats.update({name:0})
+
+		else:
+			if verbose_errors[2]:
+				print("Invalid argument: '{}'".format(arg))
 
 	if(exact_path[2]):
 		os.chdir(os.path.expanduser('~'))
-
-	for i in extensions:
-		formats.update({i.strip("."):0})
 
 	if os.path.isdir(path):
 		total = count_directory_lines(path)
