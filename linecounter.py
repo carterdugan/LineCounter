@@ -35,7 +35,7 @@ collections = {}
 
 def print_help():
 	print("Use option --help to view this message.")
-	print("Usage: linecounter [OPTIONS] <PATH> <EXTENSION_1>,[EXTENSION_2],...,[EXTENSION_N]\n")
+	print("Usage: linecounter [OPTIONS] <EXTENSIONS> <PATH>\n")
 	print("{:^25}".format("[[OPTIONS]]\n"))
 		
 	for flag in option_flags:
