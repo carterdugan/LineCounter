@@ -8,7 +8,7 @@ Not an avid python user, so the code is probably not very pythonic.
 
   * Options
     * There are currently options to specify different verbose outputs and recursively moving down
-the directory tree. For a list of options, use 'linecounter --help'
+the directory tree. For a list of options, use `linecounter --help`
 
   * Path
     * Path may be either exact or relative. See `--help` for more details. Specified paths must use '/' separators regardless of operating system.
