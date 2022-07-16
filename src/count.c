@@ -70,6 +70,8 @@ int countDirectory(char* path, struct FlagContainer f, int* extension_subtotals)
     char* subdir_name;
     char new_path[MAX_PATH_LENGTH];
     int line_count;
+    int path_size;
+    int subdir_size;
 
     line_count = 0;
 
@@ -96,6 +98,13 @@ int countDirectory(char* path, struct FlagContainer f, int* extension_subtotals)
             subdir_name = dir->d_name;
 
             if(strcmp("..", subdir_name) && strcmp(".", subdir_name)) {
+
+                path_size = strlen(path);
+                subdir_size = strlen(subdir_name);
+
+                if(path_size + subdir_size >= MAX_PATH_LENGTH) {
+                    return 0;
+                }
 
                 strcat(new_path, "/");
                 strcat(new_path, subdir_name);
