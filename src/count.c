@@ -15,14 +15,16 @@ bool isDir(char* path) {
 
 bool hasExtension(char* path, char* extension) {
 
-    int last_dot_index = 0;
+    int last_dot_index;
     int i;
-    int j;
+    int index;
     int size;
     char* p;
     char f_ext[EXTENSION_MAX_LENGTH];
 
     size = strlen(path);
+
+    last_dot_index = 0;
 
     for(i = 0; i < size; i++) {
 
@@ -40,17 +42,22 @@ bool hasExtension(char* path, char* extension) {
     
     }
 
-    i = 0;
+    index = 0;
 
-    for(j = ++last_dot_index; j < size; j++) {
+    for(i = ++last_dot_index; i < size; i++) {
 
-        f_ext[i] = path[j];
-        i++;
-        if(i >= EXTENSION_MAX_LENGTH) {return 0;}
+        f_ext[index] = path[i];
+        index++;
+        
+        if(index >= EXTENSION_MAX_LENGTH) {
+        
+            return 0;
+
+        }
 
     }
 
-    f_ext[i] = '\0';
+    f_ext[index] = '\0';
 
     return !strcmp(f_ext, extension);
 
@@ -158,6 +165,12 @@ int countFile(char* path, struct FlagContainer f, int* extension_subtotals) {
     }
 
     if((fp = fopen(path, "r")) == NULL) {
+
+        if(f.verbose_files) {
+
+            printf("Cannot open file '%s'\n", path);
+
+        }
 
         return 0;
 

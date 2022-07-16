@@ -56,7 +56,7 @@ int main(int argc, char** argv) {
 
     if(fcontainer.extension_count == 0) {
     
-        printf("Must have more than 1 extension\n");
+        printf("Must have 1 or more extensions\n");
         return -1;
     
     }
