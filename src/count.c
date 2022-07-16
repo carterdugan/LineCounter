@@ -59,10 +59,9 @@ bool hasExtension(char* path, char* extension) {
 int countDirectory(char* path, struct FlagContainer f, int* extension_subtotals) {
 
     DIR* d;
-    struct dirent *dir;
+    struct dirent* dir;
     char* subdir_name;
     char new_path[MAX_PATH_LENGTH];
-    int size = strlen(path);
     int line_count;
 
     line_count = 0;
@@ -70,6 +69,18 @@ int countDirectory(char* path, struct FlagContainer f, int* extension_subtotals)
     strcpy(new_path, path);
 
     d = opendir(path);
+
+    if(d == NULL) {
+
+        if(f.verbose_dir) {
+
+            printf("Cannot open directory '%s'\n", path);
+
+        }
+
+        return 0;
+
+    }
 
     if(d) {
 
@@ -82,7 +93,7 @@ int countDirectory(char* path, struct FlagContainer f, int* extension_subtotals)
                 strcat(new_path, "/");
                 strcat(new_path, subdir_name);
 
-                if(isDir(subdir_name)) {
+                if(isDir(new_path)) {
 
                     if(f.branch) {
 
@@ -95,20 +106,21 @@ int countDirectory(char* path, struct FlagContainer f, int* extension_subtotals)
                         line_count += countFile(new_path, f, extension_subtotals);
 
                 }
-
-                if(f.verbose_dir) {
-
-                    printf("Directory '%s': %d\n", subdir_name, line_count);
-
-                }
                 
                 strcpy(new_path, path);
 
             }
 
+
         }
 
         closedir(d);
+
+    }
+
+    if(f.verbose_dir) {
+
+        printf("Directory '%s': %d\n", path, line_count);
 
     }
 
