@@ -97,17 +97,20 @@ int countDirectory(char* path, struct FlagContainer f, int* extension_subtotals)
 
             subdir_name = dir->d_name;
 
-            if(strcmp("..", subdir_name) && strcmp(".", subdir_name)) {
+            if(subdir_name[0] != '.') {
 
                 path_size = strlen(path);
-                subdir_size = strlen(subdir_name);
+                subdir_size = strlen(subdir_name) + 1;
 
                 if(path_size + subdir_size >= MAX_PATH_LENGTH) {
                     return 0;
                 }
 
-                strcat(new_path, "/");
-                strcat(new_path, subdir_name);
+                /*
+                This spits out a warning due to the buffer size,
+                ignore it (for now).
+                */
+                sprintf(new_path, "%s/%s", new_path, subdir_name);
 
                 if(isDir(new_path)) {
 
@@ -123,10 +126,8 @@ int countDirectory(char* path, struct FlagContainer f, int* extension_subtotals)
 
                 }
                 
-                strcpy(new_path, path);
-
+                new_path[path_size] = '\0';
             }
-
 
         }
 
