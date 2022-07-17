@@ -35,8 +35,12 @@ int main(int argc, char** argv) {
     
         }
 
-        strcpy(fcontainer.extensions[fcontainer.extension_count], argv[i]);
-        fcontainer.extension_count++;
+        if(fcontainer.extension_count < MAX_EXTENSIONS) {
+
+            strcpy(fcontainer.extensions[fcontainer.extension_count], argv[i]);
+            fcontainer.extension_count++;
+            
+        }
     
     }
 
@@ -82,7 +86,7 @@ int main(int argc, char** argv) {
             printf("Extension .%s: %d (%.2f%%)\n",
                 fcontainer.extensions[i],
                 st,
-                (float)st / line_count * 100);
+                line_count == 0 ? 0 : (float)st / line_count * 100);
     
         }
     

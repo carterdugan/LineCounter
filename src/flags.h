@@ -12,15 +12,17 @@
 
 struct FlagContainer{
 
-    uint8_t verbose_files   : 1;
-    uint8_t verbose_dir     : 1;
-    uint8_t verbose_errors  : 1;
-    uint8_t branch          : 1;
-    uint8_t subtotals       : 1;
-    uint8_t whitespace      : 1;
+    uint8_t verbose_files   : 1; /* print the files visited */
+    uint8_t verbose_dir     : 1; /* print the directories visited */
+    uint8_t verbose_errors  : 1; /* print any encountered errors */
+    uint8_t branch          : 1; /* branch into subdirectories */
+    uint8_t subtotals       : 1; /* print subtotals for each extension */
+    uint8_t whitespace      : 1; /* exclude white space from the count */
 
+    /* extensions specified at the command line */
     char extensions[MAX_EXTENSIONS][EXTENSION_MAX_LENGTH];
 
+    /* Total number of extensions */
     int extension_count;
 
 };
