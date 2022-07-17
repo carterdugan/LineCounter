@@ -188,11 +188,17 @@ int countFile(char* path, struct FlagContainer f, int* extension_subtotals) {
 
     while(fgets(line, MAX_LINE_LENGTH, fp) != NULL) {
     
-        if(strcmp("\n", line)) {
+        if(f.whitespace) {
 
-            line_count++;
+            if(!strcmp("\n", line)) {
+
+                continue;
+            
+            }
 
         }
+
+        line_count++;
     
     }
 

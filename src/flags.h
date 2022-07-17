@@ -17,6 +17,7 @@ struct FlagContainer{
     uint8_t verbose_errors  : 1;
     uint8_t branch          : 1;
     uint8_t subtotals       : 1;
+    uint8_t whitespace      : 1;
 
     char extensions[MAX_EXTENSIONS][EXTENSION_MAX_LENGTH];
 

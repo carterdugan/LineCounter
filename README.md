@@ -26,5 +26,7 @@ Navigate to the LineCounter directory and build with `make`
 
   `-s` Output the subtotals of each specified extension
 
+  `-w` Exclude white space from the count
+
 ## Example
 `linecounter -bs c h  /PATH/TO/DIRECTORY/OR/FILE`

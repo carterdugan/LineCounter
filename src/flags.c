@@ -13,10 +13,11 @@ void setFlags(int argc, char** argv, struct FlagContainer* f) {
     f->verbose_errors = false;
     f->branch = false;
     f->subtotals = false;
+    f->whitespace = false;
 
     f->extension_count = 0;
 
-    while ((c = getopt(argc, argv, ":fdebs")) != -1) {
+    while ((c = getopt(argc, argv, ":fdebsw")) != -1) {
 
         switch(c) {
 
@@ -39,6 +40,10 @@ void setFlags(int argc, char** argv, struct FlagContainer* f) {
 
             case 's':
                 f->subtotals = true;
+                break;
+
+            case 'w':
+                f->whitespace = true;
                 break;
 
 
