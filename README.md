@@ -1,4 +1,4 @@
-# LineCounter
+# LineCounter (C90)
 A command line tool to count your lines of code written in C.
 Any contributions are welcome and appreciated.
 
