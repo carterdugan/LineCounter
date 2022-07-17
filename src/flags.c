@@ -10,12 +10,13 @@ void setFlags(int argc, char** argv, struct FlagContainer* f) {
 
     f->verbose_files = false;
     f->verbose_dir = false;
+    f->verbose_errors = false;
     f->branch = false;
     f->subtotals = false;
 
     f->extension_count = 0;
 
-    while ((c = getopt(argc, argv, ":fdbs")) != -1) {
+    while ((c = getopt(argc, argv, ":fdebs")) != -1) {
 
         switch(c) {
 
@@ -28,6 +29,9 @@ void setFlags(int argc, char** argv, struct FlagContainer* f) {
             case 'd':
                 f->verbose_dir = true;
                 break;
+
+            case 'e':
+                f->verbose_errors = true;
 
             case 'b':
                 f->branch = true;

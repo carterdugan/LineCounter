@@ -81,7 +81,7 @@ int countDirectory(char* path, struct FlagContainer f, int* extension_subtotals)
 
     if(d == NULL) {
 
-        if(f.verbose_dir) {
+        if(f.verbose_dir & f.verbose_errors) {
 
             printf("Cannot open directory '%s'\n", path);
 
@@ -176,7 +176,7 @@ int countFile(char* path, struct FlagContainer f, int* extension_subtotals) {
 
     if((fp = fopen(path, "r")) == NULL) {
 
-        if(f.verbose_files) {
+        if(f.verbose_files && f.verbose_errors) {
 
             printf("Cannot open file '%s'\n", path);
 

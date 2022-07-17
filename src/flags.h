@@ -5,16 +5,18 @@
 #include <string.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdint.h>
 
 #define EXTENSION_MAX_LENGTH 8
 #define MAX_EXTENSIONS 64
 
 struct FlagContainer{
 
-    char verbose_files   : 1;
-    char verbose_dir     : 1;
-    char branch          : 1;
-    char subtotals       : 1;
+    uint8_t verbose_files   : 1;
+    uint8_t verbose_dir     : 1;
+    uint8_t verbose_errors  : 1;
+    uint8_t branch          : 1;
+    uint8_t subtotals       : 1;
 
     char extensions[MAX_EXTENSIONS][EXTENSION_MAX_LENGTH];
 
