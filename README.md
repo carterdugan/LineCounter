@@ -20,7 +20,7 @@ Navigate to the LineCounter directory and build with `make`
 
   `-d` Output all directories visited and their subtotal
 
-  `e` Output any errors encountered in opening files or directories. `-f` and or `-d` must be specified.
+  `-e` Output any errors encountered in opening files or directories. `-f` and or `-d` must be specified.
 
   `-b` Recursively count through subdirectories
 
