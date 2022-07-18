@@ -15,51 +15,35 @@ bool isDir(char* path) {
 
 bool hasExtension(char* path, char* extension) {
 
-    int last_dot_index;
-    int i;
-    int index;
-    int size;
-    char* p;
-    char f_ext[EXTENSION_MAX_LENGTH];
+    int path_size;
+    int extension_size;
+    int i; /* index for extension */
+    int j; /* index for path */
 
-    size = strlen(path);
+    path_size = strlen(path);
+    extension_size = strlen(extension);
 
-    last_dot_index = 0;
-
-    for(i = 0; i < size; i++) {
-
-        if(path[i] == '.') {
-
-            last_dot_index = i;
-        
-        }
-
-    }
-
-    if(last_dot_index == 0) {
+    if(extension_size > path_size) {
         
         return false;
-    
+
     }
 
-    index = 0;
+    j = path_size - 1;
 
-    for(i = ++last_dot_index; i < size; i++) {
+    for(i = extension_size - 1; i >= 0; i--) {
 
-        f_ext[index] = path[i];
-        index++;
-        
-        if(index >= EXTENSION_MAX_LENGTH) {
-        
-            return 0;
+        if(extension[i] != path[j]) {
+
+            return false;
 
         }
 
+        j--;
+
     }
 
-    f_ext[index] = '\0';
-
-    return !strcmp(f_ext, extension);
+    return true;
 
 }
 
