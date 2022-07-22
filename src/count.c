@@ -87,6 +87,7 @@ int countDirectory(char* path, struct FlagContainer f, int* extension_subtotals)
                 subdir_size = strlen(subdir_name) + 1;
 
                 if(path_size + subdir_size >= MAX_PATH_LENGTH) {
+                    printf("Cannot check '%s' due to path size.\n");
                     return 0;
                 }
 
