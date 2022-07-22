@@ -12,7 +12,7 @@ all: $(OBJ)
 	$(CC) $(OBJ) $(DFLAGS) $(CFLAGS) -o linecounter
 
 %.o: $(OBJDIR)/%.c
-	@echo Building object files
+	@echo Building $@
 	$(CC) $(DFLAGS) $< -c
 
 clean:
