@@ -18,19 +18,34 @@ int main(int argc, char** argv) {
 
     int i;
 
-    setFlags(argc, argv, &fcontainer);
-
     if(argc < 2) {
     
         printf("Usage: ./linecounter [extensions] <options> [path]\n");
+        printf("Use --help for more details\n");
         return -1;
     
     }
 
+    if(!strcmp("--help", argv[1])) {
+
+        printf("Usage: ./linecounter [extensions] <options> [path]\n");
+        printf("    -f    %s", "Verbose output that prints the path of each file visited\n");
+        printf("    -d    %s", "Verbose output that prints the path of each directory visited\n");
+        printf("    -e    %s", "Verbose output that prints any errors encountered\n");
+        printf("    -w    %s", "Exlude whitespace from the counted lines of code\n");
+        printf("    -b    %s", "Branch out into subdirectories\n");
+        printf("    -s    %s", "Print out the subtotals of the each extension\n");
+
+        return 0;
+
+    }
+
+    setFlags(argc, argv, &fcontainer);
+
     for(i = 1; i < argc; i++) {
         
         if(argv[i][0] == '-') {
-    
+
             continue;
     
         }
