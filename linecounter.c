@@ -3,23 +3,22 @@
 PATH_TYPE pathType(char path[PATH_LENGTH + 1])
 {
 
-    PATH_TYPE ret_value = OTHER_PATH;
-
     /* Use of 'Kernel32.dll' and I believe 'fileapi.h' */
     #if defined(_WIN32) || defined(_WIN64)
 
         DWORD attribute = GetFileAttributes(path);
 
-        if(attribute != INVALID_FILE_ATTRIBUTES &&
-          (attribute & FILE_ATTRIBUTE_DIRECTORY))
+        if(attribute == INVALID_FILE_ATTRIBUTES)
         {
-            ret_value = DIRECTORY_PATH;
+            return ERROR_PATH;
         }
-        else if(attribute != INVALID_FILE_ATTRIBUTES &&
-               (attribute & FILE_ATTRIBUTE_NORMAL))
+
+        if(attribute & FILE_ATTRIBUTE_DIRECTORY)
         {
-            ret_value = FILE_PATH;
+            return DIRECTORY_PATH;
         }
+
+        return FILE_PATH;
 
     #elif defined(__unix__)
 
@@ -27,16 +26,18 @@ PATH_TYPE pathType(char path[PATH_LENGTH + 1])
 
         if(stat(path, &sb) == 0 && S_ISDIR(sb.st_mode))
         {
-            ret_value = DIRECTORY_PATH;
+            return DIRECTORY_PATH;
         }
-        else if(stat(path, &sb) == 0 && S_ISREG(sb.st_mode))
+        
+        if(stat(path, &sb) == 0 && S_ISREG(sb.st_mode))
         {
-            ret_value = FILE_PATH;
+            return FILE_PATH;
         }
+
+        return OTHER_PATH;
 
     #endif
 
-    return ret_value;
 }
 
 int main(int argc, char * argv[])

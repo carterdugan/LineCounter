@@ -68,7 +68,8 @@ typedef enum
     DIRECTORY_PATH,
     FILE_PATH,
 
-    OTHER_PATH
+    OTHER_PATH,
+    ERROR_PATH
 
 } PATH_TYPE;
 
