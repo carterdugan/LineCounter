@@ -1,10 +1,11 @@
 #include "linecounter.h"
 
-PATH_TYPE pathType(char path[PATH_LENGTH])
+PATH_TYPE pathType(char path[PATH_LENGTH + 1])
 {
 
     PATH_TYPE ret_value = OTHER_PATH;
 
+    /* Use of 'Kernel32.dll' and I believe 'fileapi.h' */
     #if defined(_WIN32) || defined(_WIN64)
 
         DWORD attribute = GetFileAttributes(path);
@@ -43,7 +44,7 @@ int main(int argc, char * argv[])
 
     char path[PATH_LENGTH + 1] = {'\0'};
 
-    if(argc < 2)
+    if(argc < 3)
     {
         printf("Usage: ./linecounter <OPTIONS> [EXTENSIONS] [PATH]\n");
         return 1;

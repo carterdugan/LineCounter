@@ -72,6 +72,6 @@ typedef enum
 
 } PATH_TYPE;
 
-PATH_TYPE pathType(char path[PATH_LENGTH]);
+PATH_TYPE pathType(char path[PATH_LENGTH + 1]);
 
 #endif /* !LINECOUNTER_H */
