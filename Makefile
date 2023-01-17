@@ -1,12 +1,11 @@
 CC := gcc
-CFLAGS := -Wall -ansi -I./src -Wall
-OBJ := linecounter.o count.o flags.o
-OBJDIR := ./src
+CFLAGS := -Wall -ansi -I. -Wall
+OBJ := linecounter.o
 
 all: $(OBJ)
 	$(CC) $(OBJ) $(CFLAGS) -o linecounter
 
-%.o: $(OBJDIR)/%.c
+%.o: %.c
 	$(CC) $(CFLAGS) $< -c
 
 debug: CFLAGS += -ggdb
