@@ -9,7 +9,7 @@ else
 	endif
 endif
 
-CFLAGS := -Wall -ansi -I. -Wall
+CFLAGS := -Wall -ansi -I.
 OBJ := linecounter.o
 
 all: $(OBJ)

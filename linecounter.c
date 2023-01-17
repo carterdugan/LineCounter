@@ -3,7 +3,7 @@
 PATH_TYPE pathType(char path[PATH_LENGTH + 1])
 {
 
-    /* Use of 'Kernel32.dll' and I believe 'fileapi.h' */
+    /* Use of 'Kernel32.dll' and 'fileapi.h' */
     #if defined(_WIN32) || defined(_WIN64)
 
         DWORD attribute = GetFileAttributes(path);
